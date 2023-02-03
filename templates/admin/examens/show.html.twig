@@ -1,0 +1,40 @@
+{% extends 'admin/baseAdmin.html.twig' %}
+
+{% block title %}examens{% endblock %}
+
+
+{% block main %}
+{# <h1 class="mb-5 text-center">Examens ID: {{ examen.id }}</h1> #}
+
+{# Afficher l'élève #}
+{# Afficher questions examen #}
+{# Afficher réponsesEleves de l'élève #}
+
+{# <h3>Élève : {{ eleve.firstname }}</h3> #}
+
+{# <h3 class="mt-3">Id du questionnaire : {{ questionnaire }}</h3> #}
+
+<h3 class="mt-5">Questions</h3>
+<table>
+
+  <tbody>
+    {% for question in sujet %}
+    <tr>
+      <td class="bg-dark text-light">{{question.texte}}</td>
+    </tr>
+    {% for reponse in question.reponses %}
+    <tr>
+      <td class="alert alert-{{reponse.statut}}">{{reponse.libelle}}</td>
+    </tr>
+    {% endfor %}
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+<hr class="my-5">
+
+
+
+
+{# <a href="{{ path('app_examens_new') }}">Create new</a> #}
+{% endblock %}

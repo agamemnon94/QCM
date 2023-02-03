@@ -1,0 +1,59 @@
+{% extends 'admin/baseAdmin.html.twig' %}
+
+{% block title %}Liste des classes{% endblock %}
+{% block button %}
+<div class="text-end">
+  {# <a href="{{ path('classe_create') }}" class="btn btn-success py-3" id="add_category">Ajouter une classe</a> #}
+</div>
+{% endblock button %}
+
+{% block main %}
+
+<h1 id="page-classes" class="mb-5 text-center">Liste des classes</h1>
+
+<table class="table table-hover table-striped table-sm text-center">
+  <thead>
+    <tr class="">
+      <td class="col">N°</td>
+      <td class="col">Id</td>
+      <td class="col">Nom</td>
+      <td class="col">Eleves</td>
+      <td class="col">Questionnaires</td>
+      <td class="col">Active</td>
+      <td class="col">Actions</td>
+    </tr>
+  </thead>
+  <tbody>
+    {% for classe in classes|reverse %}
+
+    <tr class="text-center" data-id="{{classe.id}}">
+      <td>{{ loop.revindex }}</td>
+      <td>{{ classe.id }}</td>
+      <td>{{ classe.name }}</td>
+      <td>{{ classe.eleves|length }}</td>
+      <td>{{ classe.questionnaires|length }}</td>
+      <td>{{ classe.active ? 'oui' : 'Non'}}</td>
+
+      <td>
+        <button class="btn btn-danger remove-classe">Supprimer</button>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+<hr class="own_hr">
+
+<h1 class="text-center  my-5">Ajouter une classe</h1>
+
+{{form_start(form,{
+'attr':{
+'id':'formulaire'
+}
+})}}
+{{form_row(form.name)}}
+{{form_row(form.active)}}
+<button type="button" class="btn btn-primary add-classe">Ajouter</button>
+{{form_end(form)}}
+
+{% endblock %}

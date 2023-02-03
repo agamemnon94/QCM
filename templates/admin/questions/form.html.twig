@@ -1,0 +1,173 @@
+{% extends 'admin/baseAdmin.html.twig' %}
+{% block title %}
+Questions
+{% endblock %}
+
+{% block main %}
+
+<h1 class="pb-5 text-center">{{ action=='create' ? 'Créer une nouvelle' : 'Modifier une' }} question</h1>
+
+{{ form_start(questionsForm) }}
+
+<div class="row">
+
+  <div class="row col-12">
+
+    <div class="d-flex flex-column col-3">
+      {{ form_row(questionsForm._token) }}
+      {{ form_label(questionsForm.text) }}
+      {{ form_widget(questionsForm.text,{
+      'attr':{
+      'rows':'5',
+      'cols':'6'
+      }
+      }) }}
+    </div>
+    <div class=" d-flex flex-column col-2">
+      {{ form_label(questionsForm.type) }}
+      {{ form_widget(questionsForm.type) }}
+    </div>
+
+    <div class="row col-3">
+      {# <div class=" d-flex flex-column col">
+        {{ form_label(questionsForm.questionnaires) }}
+        {{ form_widget(questionsForm.questionnaires) }}
+      </div> #}
+      <div class=" d-flex flex-column col">
+        {{ form_label(questionsForm.categories) }}
+        {{ form_widget(questionsForm.categories) }}
+      </div>
+      <div class="d-flex flex-column align-items-center col-2 gap-2">
+        {{ form_label(questionsForm.active) }}
+        {{ form_widget(questionsForm.active) }}
+      </div>
+    </div>
+
+    <div class="container col-12">
+      <div class=" d-flex flex-column col mb-3 col-3">
+        {{ form_label(questionsForm.img) }}
+        {{ form_widget(questionsForm.img) }}
+        {{ form_help(questionsForm.img) }}
+      </div>
+
+      <div>
+        <div>
+          {% if questionsForm.img is not empty %}
+          <img src="{{ asset('/img/questionImg/' ~ questionsForm.img) }}" alt="">
+          {% endif %}
+        </div>
+
+        <div>
+          {{ form_label(questionsForm.no_img) }}
+          {{ form_widget(questionsForm.no_img) }}
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+  <div class="row mb-5">
+    <div class="col-12 text-end">
+      <a href="{{ path('admin_questions') }}" class="btn btn-outline-danger me-3 py-3">Annuler</a>
+      {# Pas besoin de préciser le type du bouton #}
+      <button class="btn btn-success p-3">{{ app.request.attributes.get('_route')=='question_create' ? 'Créer' :
+        'Modifier'
+        }}</button>
+    </div>
+  </div>
+
+  {% if question_id is defined %}
+  <div class="row">
+
+    <h1 class="text-center">Réponses liées</h1>
+
+    <table class="table table-hover table-striped table-sm">
+      <thead>
+        <tr>
+          <th>N°</th>
+          <th>Id</th>
+          <th>Libellé</th>
+          <th>Success</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        {# Trie les reponses par la valeur bonne d'abord #}
+        {% for resp in reponses_proposees|sort((a, b) => b.success <=> a.success) %}
+          <tr class="" data.id="{{resp.id}}">
+            <td>{{ loop.revindex }}</td>
+            <td>{{ resp.id }}</td>
+            <td>{{ resp.libelle }}</td>
+            <td>{{ resp.success ? 'Bonne' : 'Fausse' }}</td>
+            {# <td><a class="btn btn-danger"
+                href="{{ path('question_remove_resp',{'id':question_id,'id_resp':resp.id}) }}">Supprimer</a>
+            </td> #}
+            <td><button class="btn btn-danger remove-resp">Supprimer</button></td>
+          </tr>
+          {% endfor %}
+      </tbody>
+
+    </table>
+  </div>
+  {% endif %}
+  {# <div class="row">
+    <table class="table table-hover table-sm text-center mt-5">
+      <thead class="bg-dark text-light">
+        <tr>
+          <th>N°</th>
+          <th>Id</th>
+          <th>Libellé</th>
+          <th>Valeur</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        {% for reponse in reponses|reverse %}
+        <tr>
+          <td>{{ loop.revindex }}</td>
+          <td>{{ reponse.id }}</td>
+          <td>{{ reponse.libelle }}</td>
+          <td>{{ reponse.success ? 'Good' : 'Bad' }}</td>
+          <td><a class="btn btn-primary"
+              href="{{ path('question_add_resp',{'id':question_id,'id_resp':reponse.id}) }}">Ajouter</a></td>
+        </tr>
+        {% endfor %}
+      </tbody>
+
+    </table>
+  </div> #}
+</div>
+
+
+{{ form_end(questionsForm,{render_rest:false}) }}
+{% if question_id is defined %}
+<hr class="mt-5 own_hr">
+<h1 id="page-reponse" class="text-center my-5">Ajouter une réponse</h1>
+
+{{ form_start(responseForm) }}
+
+<div class="container col-12">
+
+  <input class="col-1" type="text" name="question_id" value="{{ question_id }}">
+
+  <div class="d-flex flex-column col-6">
+    {{ form_label(responseForm.libelle) }}
+    {{ form_widget(responseForm.libelle) }}
+  </div>
+
+  <div class="d-flex flex-column gap-2">
+    {{ form_label(responseForm.success) }}
+    {{ form_widget(responseForm.success) }}
+  </div>
+
+  <button type="button" class="my-5 btn btn-primary add-resp">Ajouter</button>
+</div>
+
+
+{{ form_end(responseForm) }}
+{% endif %}
+
+
+{% endblock %}

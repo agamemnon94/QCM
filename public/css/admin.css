@@ -1,0 +1,153 @@
+* {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+  text-decoration: none;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+.own_hr {
+  border: 1px solid rgb(33, 37, 41);
+  opacity: 1;
+  margin: 5px 0;
+}
+
+main {
+  min-height: calc(100vh - 112px);
+}
+
+/** nav_bar **/
+.container_nav {
+  min-height: 88.5vh;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: violet;
+}
+.admin_nav {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 35px 0 0 0;
+}
+
+.admin_nav ul {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+}
+
+li:hover {
+  animation: vibrate 0.2s 1 0.15s;
+}
+
+li {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+i {
+  transition: hover 0.2s ease-in-out;
+}
+.admin_nav i {
+  color: #fff;
+  font-size: clamp(2.5rem, 3vw, 4rem);
+}
+.admin_nav i:hover {
+  color: lightskyblue;
+}
+
+/** fin nav_bar **/
+
+h1 {
+  font-size: 3.5rem;
+}
+
+table {
+  font-size: clamp(1.5rem, 2vw, 1.8rem);
+}
+thead {
+  font-size: clamp(1.8rem, 2vw, 2rem);
+  font-weight: bolder;
+}
+
+tbody:before {
+  content: "-";
+  display: block;
+  line-height: 1em;
+  color: transparent;
+}
+
+.bi-trash3 {
+  color: crimson;
+}
+i:hover {
+  color: rgb(0, 182, 0);
+}
+.bi-trash3:hover {
+  color: red;
+}
+
+#add_category {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+}
+
+/** form **/
+label,
+input {
+  font-size: clamp(1.5rem, 2vw, 1.8rem);
+}
+
+label {
+  margin-right: 10px;
+}
+
+textarea {
+  font-size: clamp(1.5rem, 2vw, 1.8rem);
+}
+
+input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
+}
+
+select {
+  font-size: clamp(1.5rem, 2vw, 1.8rem);
+}
+
+/** img **/
+img {
+  width: clamp(250px, 30vw, 600px);
+}
+
+/*** Animations ***/
+@keyframes vibrate {
+  0% {
+    transform: translateY(5%);
+  }
+  20% {
+    transform: translateY(-5%);
+  }
+  40% {
+    transform: translateY(5%);
+  }
+  60% {
+    transform: translateY(-5%);
+  }
+  80% {
+    transform: translateY(5%);
+  }
+  100% {
+    transform: translateY(-5%);
+  }
+}

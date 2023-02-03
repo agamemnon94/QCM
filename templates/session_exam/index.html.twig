@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello SessionExamController!{% endblock %}
+
+{% block main %}
+{{ form_start(sessionForm) }}
+
+{{ form_row(sessionForm.nom) }}
+{{ form_row(sessionForm.prenom) }}
+{{ form_row(sessionForm.formCode) }}
+{# {{ form_row(sessionForm.valider) }} #}
+
+<button type="submit">Valider</button>
+
+{{ form_end(sessionForm) }}
+
+
+{% endblock %}

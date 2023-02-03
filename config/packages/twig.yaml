@@ -1,0 +1,17 @@
+twig:
+  default_path: "%kernel.project_dir%/templates"
+
+  globals:
+    contact_company: "QCM"
+    contact_adress: "12 rue de la ville"
+    contact_zip: "12345"
+    contact_city: "Ville"
+    contact_phone: "01 23 45 67 89"
+    contact_email: "QCM@domaine.com"
+
+  paths:
+    "public/img": images
+
+when@test:
+  twig:
+    strict_variables: true

@@ -1,0 +1,41 @@
+{% extends 'admin/baseAdmin.html.twig' %}
+
+{% block title %}Liste des examens{% endblock %}
+{% block button %}
+<div class="text-end">
+    <a href="{{ path('examen_create') }}" class="btn btn-success py-3" id="add_category">Ajouter un
+        examen</a>
+</div>
+{% endblock button %}
+
+{% block main %}
+<h1 class="mb-5 text-center">Liste de examens</h1>
+
+<table class="table table-striped table-sm">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Created_at</th>
+            <th>actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for examen in examens %}
+        <tr>
+            <td>{{ examen.id }}</td>
+            <td>{{ examen.createdAt ? examen.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+            <td>
+                <a class="btn btn-primary col mx-2" href="{{ path('examen_show', {'id': examen.id}) }}">Afficher</a>
+                <a class="btn btn-danger col mx-2" href="{{ path('examen_delete', {'id': examen.id}) }}">Supprimer</a>
+            </td>
+        </tr>
+        {% else %}
+        <tr>
+            <td class="text-center" colspan="12">Aucun examen trouvé</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{# <a href="{{ path('app_examens_new') }}">Create new</a> #}
+{% endblock %}

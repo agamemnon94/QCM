@@ -1,0 +1,52 @@
+{% extends 'admin/baseAdmin.html.twig' %}
+
+{% block title %}Liste des questionnaires{% endblock %}
+{% block button %}
+<div class="text-end">
+    <a href="{{ path('questionnaire_create') }}" class="btn btn-success py-3" id="add_category">Ajouter
+        unquestionnaire</a>
+</div>
+{% endblock button %}
+
+{% block main %}
+<h1 class="mb-5 text-center">Liste des questionnaires</h1>
+
+<table class="table table-striped table-sm">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Code</th>
+            <th>Classe</th>
+            <th>Questions</th>
+            <th>Consignes</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for questionnaire in questionnaires %}
+        <tr>
+            <td class="col">{{ questionnaire.id }}</td>
+            <td class="col">{{ questionnaire.formCode }}</td>
+            <td class="col">
+                {% for questClass in questionnaire %}
+                {{ questClass.questionnaireClasse }}</td>
+            {% endfor %}
+            <td class="col-1">{{ questionnaire.questionnaireQuestion|length }}</td>
+            <td class="col-5">{{ questionnaire.consigne }}</td>
+            <td>
+                <a class="col mx-2" href="{{ path('questionnaire_update',{'id':questionnaire.id}) }}" title="Éditer"><i
+                        class="bi bi-pencil-square"></i></a>
+                <a class="col mx-2" href="{{ path('questionnaire_delete',{'id':questionnaire.id}) }}"
+                    title="Supprimer"><i class="bi bi-trash3"></i></a>
+            </td>
+        </tr>
+        {% else %}
+        <tr>
+            <td class="text-center" colspan="12">Aucun enregistrement trouvé</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{# <a href="{{ path('app_questionnaires_new') }}">Create new</a> #}
+{% endblock %}

@@ -1,0 +1,50 @@
+{% extends 'admin/baseAdmin.html.twig' %}
+
+{% block title %}Liste des classes{% endblock %}
+{% block button %}
+<div class="text-end">
+  <a href="{{ path('classe_create') }}" class="btn btn-success py-3" id="add_category">Ajouter une classe</a>
+</div>
+{% endblock button %}
+
+{% block main %}
+
+<h1 class="mb-5 text-center">Liste des classes</h1>
+
+<table class="table table-hover table-striped table-sm text-center">
+  <thead>
+    <tr class="">
+      <td class="col">N°</td>
+      <td class="col">Id</td>
+      <td class="col">Nom</td>
+      <td class="col">Eleves</td>
+      <td class="col">Questionnaires</td>
+      <td class="col">Active</td>
+      <td class="col">Actions</td>
+    </tr>
+  </thead>
+  <tbody>
+    {% for classe in classes|reverse %}
+
+    <tr class="text-center">
+      <td>{{ loop.revindex }}</td>
+      <td>{{ classe.id }}</td>
+      <td>{{ classe.name }}</td>
+      <td>{{ classe.eleves|length }}</td>
+      <td>{{ classe.questionnaires|length }}</td>
+      <td>{{ classe.active ? 'oui' : 'Non'}}</td>
+
+      <td>
+        <a class="col mx-2" href="{{ path('classe_update',{'id':classe.id}) }}" title="Éditer"><i
+            class="bi bi-pencil-square"></i></a>
+        <a class="col mx-2" href="{{ path('classe_delete',{'id':classe.id}) }}" title="Supprimer"><i
+            class="bi bi-trash3"></i></a>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+
+
+
+</table>
+{% endblock %}

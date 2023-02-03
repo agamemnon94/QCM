@@ -1,0 +1,54 @@
+{% extends 'admin/baseAdmin.html.twig' %}
+
+{% block title %}Liste des catégories{% endblock %}
+
+{# {% block button %}
+<div class="text-end">
+  <a href="{{ path('category_create') }}" class="btn btn-success py-3" id="add_category">Ajouter une catégorie</a>
+</div>
+{% endblock button %} #}
+
+{% block main %}
+
+<h1 class="pb-5 text-center">Liste des catégories</h1>
+
+<table class="table table-striped table-hover table-sm">
+  <thead>
+    <tr class="text-center">
+      <td class="col">N°</td>
+      <td class="col">Id</td>
+      <td class="col">Nom</td>
+      <td class="col">Actions</td>
+    </tr>
+  </thead>
+  <tbody>
+    {% for category in categories|reverse %}
+
+    <tr class="text-center" data-id="{{category.id}}">
+      <td>{{ loop.revindex }}</td>
+      <td>{{ category.id }}</td>
+      <td>{{ category.name }}</td>
+
+      {# <td>
+        <a class="col mx-2" href="{{ path('category_update',{'id':category.id}) }}" title="Éditer"><i
+            class="bi bi-pencil-square"></i></a>
+        <a class="col mx-2" href="{{ path('category_delete',{'id':category.id}) }}" title="Supprimer"><i
+            class="bi bi-trash3"></i></a>
+      </td> #}
+      <td>
+        <button class="btn btn-danger remove-category">Supprimer</button>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+<hr class="own_hr">
+<h1 id="page-category" class="text-center  my-5">Ajouter une catégorie</h1>
+
+{{form_start(form)}}
+{{form_row(form.name)}}
+<button type="button" class="btn btn-primary mt-3 add-category">Ajouter</button>
+{{form_end(form)}}
+
+
+{% endblock %}

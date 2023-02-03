@@ -1,0 +1,33 @@
+{% extends 'admin/baseAdmin.html.twig' %}
+{% block title %}
+Reponses
+{% endblock %}
+
+{% block main %}
+
+<h1 class="pb-5 text-center">{{ action=='create' ? 'Créer une nouvelle' : 'Modifier une' }} réponses</h1>
+
+{{ form_start(reponsesForm) }}
+
+<div class="row">
+
+  <div class=" d-flex flex-column col-3">
+    {{ form_label(reponsesForm.libelle) }}
+    {{ form_widget(reponsesForm.libelle) }}
+  </div>
+
+
+</div>
+
+<div class="row">
+  <div class="col-12 text-end">
+    <a href="{{ path('admin_reponses') }}" class="btn btn-outline-danger me-3 py-3">Annuler</a>
+    <button class="btn btn-success p-3">{{ app.request.attributes.get('_route')=='reponse_create' ? 'Créer' :
+      'Modifier'
+      }}</button>
+  </div>
+</div>
+
+{{ form_end(reponsesForm) }}
+
+{% endblock %}

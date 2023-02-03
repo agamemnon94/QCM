@@ -1,0 +1,40 @@
+{% extends 'admin/baseAdmin.html.twig' %}
+{% block title %}
+Classes
+{% endblock %}
+
+{% block main %}
+
+<h1 class="pb-5">{{ action=='create' ? 'Créer une nouvelle' : 'Modifier une' }} classe</h1>
+
+{{ form_start(classesForm) }}
+
+<div class="row">
+  <div class="d-flex flex-column col-2">
+    {{ form_label(classesForm.name) }}
+    {{ form_widget(classesForm.name) }}
+  </div>
+  <div class="d-flex flex-column align-items-center col-2 gap-2">
+    {{ form_label(classesForm.active) }}
+    {{ form_widget(classesForm.active) }}
+  </div>
+</div>
+<div class="row mt-5">
+</div>
+
+<div class="row">
+  <div class="col-12 text-end">
+    <a href="{{ path('admin_classes') }}" class="btn btn-outline-danger me-3 py-3">Annuler</a>
+
+    <button class="btn btn-success p-3">{{ app.request.attributes.get('_route')=='classe_create' ? 'Créer' :
+      'Modifier'
+      }}</button>
+  </div>
+</div>
+
+{{ form_end(classesForm) }}
+
+
+
+
+{% endblock %}

@@ -1,0 +1,10 @@
+
+                          reponse (reponse_eleve) == id_reponse (reponse)
+
+                                true                    false
+
+isSuccess       true            Vert                    Orange
+(reponses)
+
+
+                false           Rouge                   Blanc

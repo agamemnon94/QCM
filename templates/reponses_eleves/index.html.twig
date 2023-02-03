@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}ReponsesEleves index{% endblock %}
+
+{% block body %}
+    <h1>ReponsesEleves index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Commentaire</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for reponses_elefe in reponses_eleves %}
+            <tr>
+                <td>{{ reponses_elefe.id }}</td>
+                <td>{{ reponses_elefe.commentaire }}</td>
+                <td>
+                    <a href="{{ path('app_reponses_eleves_show', {'id': reponses_elefe.id}) }}">show</a>
+                    <a href="{{ path('app_reponses_eleves_edit', {'id': reponses_elefe.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_reponses_eleves_new') }}">Create new</a>
+{% endblock %}

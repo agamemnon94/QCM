@@ -1,0 +1,74 @@
+{% extends 'admin/baseAdmin.html.twig' %}
+{% block title %}
+Examens
+{% endblock %}
+
+{% block main %}
+
+<h1 class="pb-5">{{ action=='create' ? 'Créer un nouvel' : 'Modifier un' }} examen</h1>
+
+{{ form_start(examenForm) }}
+{# {{form_row(examenForm._token)}} #}
+{% if action=='create' %}
+
+<button class="btn btn-primary">Valider</button>
+
+{% else %}
+
+<div class="row">
+
+    <div class="row">
+        <tabletable table-striped table-sm>
+            <thead>
+                <tr>
+                    <th>Élèves</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for eleve in eleves %}
+                <tr>
+                    <td>{{ eleve.fullName }}</td>
+                    <td> <a class="btn btn-primary"
+                            href="{{ path('examens_add_eleve', {'id_eleve':eleve.id}) }}">Ajouter</a> </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </tabletable>
+    </div>
+
+    <div class="row">
+        <table>
+            <thead>
+                <tr>
+                    <th>Code formulaire</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for questionnaire in questionnaires %}
+                <tr>
+                    <td>{{ questionnaire.formCode }}</td>
+                    <td> <a class="btn btn-primary"
+                            href="{{ path('examens_add_questionnaire', {'id_eleve':questionnaire.id}) }}">Ajouter</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="row">
+        <div class="col-12 text-end">
+            <a href="{{ path('admin_examens') }}" class="btn btn-outline-danger me-3 py-3">Annuler</a>
+            <button class="btn btn-success p-3">{{ app.request.attributes.get('_route')=='questionnaire_create' ?
+                'Créer' :
+                'Modifier'
+                }}</button>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+{# {{ form_end(examenForm ,{render_rest: false}) }} #}
+{{ form_end(examenForm) }}
+
+{% endblock %}

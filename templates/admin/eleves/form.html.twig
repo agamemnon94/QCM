@@ -1,0 +1,66 @@
+{% extends 'admin/baseAdmin.html.twig' %}
+{% block title %}
+Élèves
+{% endblock %}
+
+{% block main %}
+
+<h1 class="pb-5 text-center">{{ action=='create' ? 'Créer un nouvel' : 'Modifier un' }} élève</h1>
+
+{{ form_start(elevesForm) }}
+
+<div class="row mb-3">
+  <div class="">
+    {{ form_row(elevesForm.firstname,{
+    'label':'Prénom'
+    }) }}
+  </div>
+</div>
+
+<div class="row mb-3">
+  <div class="col-6">
+    {{ form_row(elevesForm.lastname,{
+    'label':'Nom'}) }}
+  </div>
+</div>
+<div class="row mb-3">
+  <div class="col-6">
+    {{ form_row(elevesForm.email,{
+    'label':'Email'}) }}
+  </div>
+</div>
+
+<table class="table table-hover table-sm text-center">
+  <thead class="bg-dark text-light">
+    <tr>
+      <th>Id</th>
+      <th>Classe</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for classe in classes %}
+    <tr>
+      <td>{{ classe.id }}</td>
+      <td>{{ classe.name }}</td>
+      <td><a class="btn btn-primary"
+          href="{{ path('eleve_add_classe', {'id':eleve_id,'id_classe':classe.id}) }}">Ajouter</a></td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+
+<div class="row">
+  <div class="col-12 text-end">
+    <a href="{{ path('admin_eleves') }}" class="btn btn-outline-danger me-3 py-3">Annuler</a>
+    {# Pas besoin de préciser le type du bouton #}
+    <button class="btn btn-success p-3">{{ app.request.attributes.get('_route')=='eleve_create' ? 'Créer' :
+      'Modifier'
+      }}</button>
+  </div>
+</div>
+
+{{ form_end(elevesForm) }}
+
+{% endblock %}

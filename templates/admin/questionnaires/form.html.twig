@@ -1,0 +1,203 @@
+{% extends 'admin/baseAdmin.html.twig' %}
+{% block title %}
+Questionnaires
+{% endblock %}
+
+{% block main %}
+
+<h1 class="pb-5 text-center">{{ action=='create' ? 'Créer un nouveau' : 'Modifier un' }} questionnaire</h1>
+
+{% if action=='create' %}
+
+{{ form_start(questionnaireForm) }}
+
+<div class=" d-flex flex-column col-3">
+    {{ form_row(questionnaireForm._token) }}
+    {{ form_label(questionnaireForm.form_code) }}
+    {{ form_widget(questionnaireForm.form_code) }}
+</div>
+
+<div class="d-flex flex-column col-3">
+    {{ form_label(questionnaireForm.consigne) }}
+    {{ form_widget(questionnaireForm.consigne,{
+    'attr':{
+    'rows':'5',
+    'cols':'6'
+    }
+    }) }}
+</div>
+
+
+<div class="row">
+    <div class="col-12 text-end">
+        <a href="{{ path('admin_questionnaires') }}" class="btn btn-outline-danger me-3 py-3">Annuler</a>
+        <button class="btn btn-success p-3">{{ app.request.attributes.get('_route')=='questionnaire_create' ? 'Créer' :
+            'Modifier'
+            }}</button>
+    </div>
+</div>
+
+{{ form_end(questionnaireForm,{render_rest:false}) }}
+
+{% else %}
+
+{{ form_start(questionnaireForm) }}
+
+<h2 class="">Questions posées</h2>
+<table class="table table-hover table-sm text-center mb-5">
+    <thead class="bg-dark text-light">
+        <tr>
+            <th>Id</th>
+            <th>Texte</th>
+            <th>Type</th>
+            <th>Image</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody id="questions_posees">
+        {% for question in questions_posees %}
+        <tr class="">
+            <td>{{question.id}}</td>
+            <td class="px-5">{{question.text}}</td>
+            <td>{{question.type}}</td>
+            <td>
+                {% if question.img %}
+                <img src="{{asset('img/questionImg/') ~ question.img}}" alt="image accompagant la question">
+                {% endif %}
+            </td>
+            <td class="">
+                <button type="button" class="btn btn-danger remove-btn" data-id="{{questionnaire_id}}"
+                    data-question="{{question.id}}">Supprimer</button>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+
+<h2 class="">Classe destinataire</h2>
+<table class="table table-hover table-sm text-center">
+    <thead class="bg-dark text-light">
+        <tr>
+            <th>Id</th>
+            <th>Nom</th>
+            <th>Active</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody id="classes_liees" data-id="{{ questionnaire_id }}">
+        {% for classe in classe_exam %}
+        <tr>
+            <td class="col-1">{{classe.id}}</td>
+            <td class="col-9">{{classe.name}}</td>
+            <td class="col-1">{{ classe.active ? 'oui' : 'Non'}}</td>
+            <td class="col-1"><button type="button" class="btn btn-danger remove_classe_btn">Supprimer</button>
+            </td>
+
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+
+<div class="row">
+
+    <div class=" d-flex flex-column col-3">
+        {{ form_label(questionnaireForm.form_code) }}
+        {{ form_widget(questionnaireForm.form_code) }}
+    </div>
+    <div class="d-flex flex-column col-3">
+        {{ form_label(questionnaireForm.consigne) }}
+        {{ form_widget(questionnaireForm.consigne,{
+        'attr':{
+        'rows':'5',
+        'cols':'6'
+        }
+        }) }}
+    </div>
+
+    {# <div class=" d-flex flex-column col-3">
+        {{ form_label(questionnaireForm.eleves) }}
+        {{ form_widget(questionnaireForm.eleves) }}
+    </div>
+    <div class=" d-flex flex-column col-3">
+        {{ form_label(questionnaireForm.questionnaire_classe) }}
+        {{ form_widget(questionnaireForm.questionnaire_classe) }}
+    </div> #}
+
+    <div class="row my-5">
+        <div class="col-12 text-end">
+            <a href="{{ path('admin_questionnaires') }}" class="btn btn-outline-danger me-3 py-3">Annuler</a>
+            <button class="btn btn-success p-3">{{ app.request.attributes.get('_route')=='questionnaire_create' ?
+                'Créer' :
+                'Modifier'
+                }}</button>
+        </div>
+    </div>
+
+    {{ form_end(questionnaireForm) }}
+
+    <div class="d-flex gap-5">
+        <div class="d-flex flex-column col-6">
+            <div class="row">
+                <h2>Liste des questions</h2>
+            </div>
+
+            <table class="table table-hover table-sm text-center">
+                <thead class="bg-dark text-light">
+                    <tr>
+                        <th>Id</th>
+                        <th>Texte</th>
+                        <th>Type</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="questions_disponibles">
+                    {# {% for question in questions_dispo %} #}
+                    {% for question in questions_dispo %}
+                    <tr>
+                        <td class="mr-2">{{question.id}}</td>
+                        <td class="px-5">{{question.text}}</td>
+                        <td class="ml-2">{{question.type}}</td>
+                        {# <td><a
+                                href="{{ path('questionnaire_add_question', {'id':questionnaire_id, 'id_question': question.id}) }}"
+                                class="btn btn-primary add-btn">Ajouter</a></td> #}
+                        <td class=""><button type="button" class="btn btn-primary add-btn"
+                                data-id="{{questionnaire_id}}" data-question="{{question.id}}">Ajouter</button></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="d-flex flex-column col-6">
+            <div class="row">
+                <h2>Liste des classes</h2>
+            </div>
+            <table class="table table-hover table-sm text-center">
+                <thead class="bg-dark text-light">
+                    <tr>
+                        <th>Id</th>
+                        <th>Nom</th>
+                        <th>Active</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="classes_proposees" data-id="{{questionnaire_id}}">
+                    {% for classe in classes %}
+                    <tr data-id="{{classe.id}}">
+                        <td>{{ classe.id }}</td>
+                        <td>{{ classe.name }}</td>
+                        <td>{{ classe.active ? 'oui' : 'Non'}}</td>
+                        <td><button type="button" class="btn btn-primary questionnaire_add_classe_btn">Ajouter</button>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+{% endif %}
+
+{% endblock %}
