@@ -51,7 +51,7 @@ class SessionExamController extends AbstractController
         ]);
     }
 
-    #[Route('session/examen/{id}', name: 'session_examen')]
+    #[Route('session/exam/{id}', name: 'session_exam')]
     public function examen(Examens $examen)
     {
         dd($examen);
