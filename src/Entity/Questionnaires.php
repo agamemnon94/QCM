@@ -39,7 +39,7 @@ class Questionnaires
 
     public function __construct()
     {
-        $this->eleves = new ArrayCollection();
+        // $this->eleves = new ArrayCollection();
         $this->questionnaire_classe = new ArrayCollection();
         $this->questionnaire_question = new ArrayCollection();
         $this->examens = new ArrayCollection();
