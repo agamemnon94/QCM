@@ -62,7 +62,7 @@ class QuestionnairesController extends AbstractController
 
         return $this->render('admin/questionnaires/form.html.twig', [
             'questionnaireForm' => $form->createView(),
-            //filtrer les quesions proposées via question possées ↓
+            //filtrer les quesions proposées via question posées ↓
             'questions' => $questionsRepository->findAll(),
             'classes' => $classesRepository->findAll(),
             'questionnaire_id' => $questionnaire->getId(),
